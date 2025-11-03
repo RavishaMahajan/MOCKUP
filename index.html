@@ -1,79 +1,43 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>MOCKUP — Smart Box Tracker</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Box Tracking Portal</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="app.js"></script>
 </head>
 <body>
-  <div class="app">
-    <header class="topbar">
-      <div class="brand">MOCKUP <span class="muted">· Smart Box Tracker (Demo)</span></div>
-      <div class="actions">
-        <input id="search" placeholder="Search ULID, name or location" />
-        <button id="newBoxBtn">+ New Box</button>
-        <button id="exportBtn">Export JSON</button>
-        <button id="importBtn">Import JSON</button>
-        <input type="file" id="importFile" accept=".json" style="display:none" />
-      </div>
-    </header>
-
-    <main class="layout">
-      <aside class="sidebar">
-        <div id="boxesList" class="list"></div>
-        <div class="footer-note">Local demo — data saved in browser storage.</div>
-      </aside>
-
-      <section class="detail">
-        <div id="empty" class="empty">Select a box or create a new one to view details.</div>
-
-        <div id="boxPanel" class="panel hidden">
-          <div class="panel-header">
-            <input id="boxName" class="title-input" placeholder="Box name (e.g. Box A12)" />
-            <div class="meta">
-              <div>ULID: <code id="boxUlid"></code></div>
-              <div id="lastUpdated">Updated: —</div>
-            </div>
-          </div>
-
-          <div class="grid">
-            <div class="card sensors">
-              <h3>Sensors</h3>
-              <label>Temperature (°C) <input id="sensorTemp" type="number" step="0.1" /></label>
-              <label>Humidity (%) <input id="sensorHum" type="number" step="0.1" /></label>
-              <label>Weight (kg) <input id="sensorW" type="number" step="0.1" /></label>
-            </div>
-
-            <div class="card items">
-              <h3>Items</h3>
-              <div id="itemsList"></div>
-              <div class="item-controls">
-                <input id="newItemName" placeholder="Item name" />
-                <input id="newItemQty" type="number" min="1" value="1" />
-                <button id="addItemBtn">Add Item</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="card notes">
-            <h3>Location & Notes</h3>
-            <label>Location <input id="boxLocation" placeholder="Shelf 3 — Row B" /></label>
-            <label>Notes <textarea id="boxNotes" rows="3" placeholder="Optional notes"></textarea></label>
-          </div>
-
-          <div class="panel-actions">
-            <button id="saveBtn" class="primary">Save</button>
-            <button id="deleteBtn" class="danger">Delete Box</button>
-            <button id="clearAllBtn" class="warn">Clear All Data</button>
-          </div>
+  <div class="container">
+    <aside class="sidebar">
+      <h2>📦 Smart Portal</h2>
+      <ul>
+        <li class="active">Dashboard</li>
+        <li>Smart Boxes</li>
+        <li>Reports</li>
+        <li>Settings</li>
+      </ul>
+    </aside>
+    <main class="main-content">
+      <header class="topbar">
+        <h1>Smart Box Tracking</h1>
+        <div class="user">Welcome, Admin</div>
+      </header>
+      <section class="dashboard">
+        <div class="card">
+          <h3>Box 1</h3>
+          <p>Status: <span class="active">Active</span></p>
+        </div>
+        <div class="card">
+          <h3>Box 2</h3>
+          <p>Status: <span class="idle">Idle</span></p>
+        </div>
+        <div class="card">
+          <h3>Box 3</h3>
+          <p>Status: <span class="offline">Offline</span></p>
         </div>
       </section>
     </main>
-
-    <footer class="footer">MOCKUP · DT Project — demo app · built: 2025-11-03</footer>
   </div>
-
-  <script src="app.js"></script>
 </body>
 </html>
