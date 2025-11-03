@@ -1,43 +1,115 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Box Tracking Portal</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Smart Box Portal — v3</title>
   <link rel="stylesheet" href="style.css">
-  <script defer src="app.js"></script>
 </head>
 <body>
-  <div class="container">
-    <aside class="sidebar">
-      <h2>📦 Smart Portal</h2>
-      <ul>
-        <li class="active">Dashboard</li>
-        <li>Smart Boxes</li>
-        <li>Reports</li>
-        <li>Settings</li>
-      </ul>
+  <div class="app">
+    <aside class="left-panel">
+      <div class="brand">
+        <div class="logo">MOCKUP</div>
+        <div class="subtitle">Smart Box Tracker — v3</div>
+      </div>
+
+      <div class="controls">
+        <input id="search" placeholder="Search ULID, name or location" autocomplete="off">
+        <div class="buttons">
+          <button id="btnNew" class="btn primary">+ New Box</button>
+          <button id="btnExport" class="btn">Export JSON</button>
+          <label class="btn file-btn">
+            Import JSON <input id="importFile" type="file" accept=".json" hidden>
+          </label>
+        </div>
+      </div>
+
+      <div class="list" id="boxList" aria-live="polite"></div>
+
+      <div class="footer-note">Tip: Click a card to view details. Charts show last 12 readings.</div>
     </aside>
-    <main class="main-content">
-      <header class="topbar">
-        <h1>Smart Box Tracking</h1>
-        <div class="user">Welcome, Admin</div>
-      </header>
-      <section class="dashboard">
-        <div class="card">
-          <h3>Box 1</h3>
-          <p>Status: <span class="active">Active</span></p>
+
+    <main class="main-area">
+      <section class="empty" id="emptyMessage">
+        <div class="empty-card">Select a box or create a new one to view details.</div>
+      </section>
+
+      <section class="detail hidden" id="detail">
+        <div class="detail-header">
+          <div class="left">
+            <div class="icon" id="detailIcon" aria-hidden="true"></div>
+            <h2 id="detailName"></h2>
+            <div class="muted" id="detailSub"></div>
+          </div>
+          <div class="actions">
+            <button id="btnEdit" class="btn">Edit</button>
+            <button id="btnDelete" class="btn danger">Delete</button>
+          </div>
         </div>
-        <div class="card">
-          <h3>Box 2</h3>
-          <p>Status: <span class="idle">Idle</span></p>
-        </div>
-        <div class="card">
-          <h3>Box 3</h3>
-          <p>Status: <span class="offline">Offline</span></p>
+
+        <div class="detail-grid">
+          <div class="box-info card">
+            <h3>Box Info</h3>
+            <p><strong>ULID:</strong> <span id="detailId"></span></p>
+            <p><strong>Location:</strong> <span id="detailLocation"></span></p>
+            <p><strong>Owner:</strong> <span id="detailOwner"></span></p>
+            <p><strong>Notes:</strong> <span id="detailNotes"></span></p>
+            <div class="meta-row">
+              <div><strong>Battery</strong><div id="detailBattery">-</div></div>
+              <div><strong>Status</strong><div id="detailStatus">-</div></div>
+            </div>
+            <div style="margin-top:12px;">
+              <button id="btnSimulate" class="btn small">Simulate Reading</button>
+            </div>
+          </div>
+
+          <div class="sensor-card card">
+            <h3>Sensor History</h3>
+            <canvas id="chartCanvas" width="400" height="240"></canvas>
+            <div class="chart-legend">
+              <span class="legend temp">🌡️ Temp (°C)</span>
+              <span class="legend hum">💧 Humidity (%)</span>
+              <span class="legend bat">🔋 Battery (%)</span>
+            </div>
+          </div>
         </div>
       </section>
     </main>
   </div>
+
+  <!-- Modal for Add / Edit -->
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <h3 id="modalTitle">New Box</h3>
+      <form id="boxForm">
+        <label>ULID (unique id)</label>
+        <input name="ulid" required maxlength="32">
+        <label>Name</label>
+        <input name="name" required maxlength="60">
+        <label>Location</label>
+        <input name="location" maxlength="80">
+        <label>Owner</label>
+        <input name="owner" maxlength="60">
+        <label>Type</label>
+        <select name="type">
+          <option value="storage">Storage Box</option>
+          <option value="temperature">Temperature</option>
+          <option value="humidity">Humidity</option>
+          <option value="battery">Battery</option>
+          <option value="location">Location</option>
+        </select>
+        <label>Notes</label>
+        <textarea name="notes" rows="3"></textarea>
+        <div class="form-row">
+          <button type="submit" class="btn primary">Save</button>
+          <button type="button" id="modalCancel" class="btn">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
